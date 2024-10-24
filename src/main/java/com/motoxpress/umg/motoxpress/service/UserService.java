@@ -15,6 +15,8 @@ import com.motoxpress.umg.motoxpress.model.RoleUser;
 import com.motoxpress.umg.motoxpress.model.auth.AuthResponse;
 import com.motoxpress.umg.motoxpress.model.auth.LoginRequest;
 import com.motoxpress.umg.motoxpress.model.auth.RegisterRequest;
+import com.motoxpress.umg.motoxpress.model.entity.PersonaEntity;
+import com.motoxpress.umg.motoxpress.model.entity.RolEntity;
 import com.motoxpress.umg.motoxpress.model.entity.UserEntity;
 import com.motoxpress.umg.motoxpress.model.repository.UserRepository;
 
@@ -44,6 +46,11 @@ public class UserService implements ServiceCRUD<UserEntity> {
         return res.isPresent() ? res.get() : null;
     }
 
+    public UserEntity getFindUncleEntity(String value) {
+        Optional<UserEntity> user = repository.findByUsername(value);
+        return user.isPresent() ? user.get() : null;
+    }
+
     public UserDetails getFindUncle(String value) {
         UserDetails user = repository.findByUsername(value).orElseThrow();
         return user;
@@ -69,23 +76,16 @@ public class UserService implements ServiceCRUD<UserEntity> {
         return user;
     }
 
-    public UserEntity register(RegisterRequest request) {
+    public UserEntity register(RegisterRequest request,RolEntity rol,PersonaEntity personaEntity) {
         UserEntity user = UserEntity.builder()
                 .username(request.getUsername())
+                .correo(request.getEmail())
+                .persona(personaEntity)
                 .password(passwordEncoder.encode(request.getPassword()))
-                .rol(RoleUser.CLIENTE.name().toLowerCase())
+                .rol(rol)
                 .build();
 
         return repository.save(user);
     }
 
-    public UserEntity registerAdmin(RegisterRequest request) {
-        UserEntity user = UserEntity.builder()
-                .username(request.getUsername())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .rol(request.getRol())
-                .build();
-
-        return repository.save(user);
-    }
 }

@@ -13,6 +13,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -22,34 +24,51 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 
-@Table(name = "usuarios")
+@Table(name = "usuario")
 @Entity
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserEntity implements UserDetails {
+    
     @Id
-    @Column(name = "id_usuario")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "id_usuario")
+    private Long idUsuario;
 
-    @Column(name = "nombre_usuario", nullable = false, length = 50)
+    @ManyToOne
+    @JoinColumn(name = "id_persona", nullable = false)
+    private PersonaEntity persona;
+
+    @ManyToOne
+    @JoinColumn(name = "id_rol", nullable = false)
+    private RolEntity rol;
+
+    @Column(name = "usuario", nullable = false, length = 100)
     private String username;
 
-    @Column(name = "contrasena", nullable = false, length = 255)
+    @Column(name = "correo", nullable = false, length = 100)
+    private String correo;
+
+    @Column(name = "contrasena", nullable = false, length = 100)
     private String password;
 
-    @Column(name = "rol", nullable = false, length = 20)
-    private String rol;
+    @Column(name = "fecha_creacion")
+    private Date fechaCreacion;
 
-    @Column(name = "fecha_registro", nullable = true)
-    @Temporal(TemporalType.DATE)
-    private Date dateRegister;
+    @Column(name = "fecha_modificacion")
+    private Date fechaModificacion;
+
+    @Column(name = "usuario_creo", length = 50)
+    private String usuarioCreo;
+
+    @Column(name = "usuario_modifico", length = 50)
+    private String usuarioModifico;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority((rol)));
+        return List.of(new SimpleGrantedAuthority((rol.getNombre())));
     }
 
     @Override
