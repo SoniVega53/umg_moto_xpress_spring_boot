@@ -23,7 +23,7 @@ public class SecurityConfig {
         private final JwtAuthenticationFilter jwtAuthenticationFilter;
         private final AuthenticationProvider authProvider;
         private final String apiAuth = "/api/proyecto/noauth/**";
-        private final String apiAuthAdmin = "/api/proyecto/user/**";
+        private final String apiAuthAdmin = "/api/proyecto/user/admin/**";
 
         @Bean
         public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -32,7 +32,7 @@ public class SecurityConfig {
                     .csrf(csrf -> csrf.disable())
                     .authorizeHttpRequests(authRequest -> authRequest
                             .requestMatchers(apiAuth).permitAll()
-                            .requestMatchers(apiAuthAdmin).hasAuthority(RoleUser.ADMIN.name())
+                            .requestMatchers(apiAuthAdmin).hasAuthority(RoleUser.ADMIN.name().toLowerCase())
                             .anyRequest().authenticated())
                     .sessionManagement(sessionManager -> sessionManager
                             .sessionCreationPolicy(SessionCreationPolicy.STATELESS))

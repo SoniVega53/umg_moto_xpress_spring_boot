@@ -75,9 +75,5 @@ public class AuthenticationController {
         }
     }
 
-    @GetMapping("see")
-    public List<UserEntity> getDataList() {
-        System.out.println(service.getDataList());
-        return service.getDataList();
-    }
+   
 }
