@@ -11,24 +11,26 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Table(name = "IMAGEN")
+@Table(name = "MODELO")
 @Entity
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ImagenEntity {
+public class ModeloEntity {
 
     @Id
-    @Column(name = "id_imagen")
+    @Column(name = "id_modelo")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "nombre", nullable = false, length = 50)
     private String nombre;
+    
 
-    @Column(name = "url", nullable = false, length = 256)
-    private String url;
+    @Column(name = "año", nullable = false)
+    private String año;
+
 
     @Column(name = "fecha_creacion", nullable = false)
     private String fecha_creacion;
