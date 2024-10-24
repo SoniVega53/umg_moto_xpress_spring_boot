@@ -63,8 +63,8 @@ public class UserService implements ServiceCRUD<UserEntity> {
     public AuthResponse login(LoginRequest request) {
         authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
-                UserEntity user = repository.findByUsername(request.getUsername()).orElseThrow();
-        String token = jwtService.getToken(user);
+                Optional<UserEntity> user = repository.findByUsername(request.getUsername());
+        String token = jwtService.getToken(user.get());
         return AuthResponse.builder()
                 .token(token)
                 .build();
