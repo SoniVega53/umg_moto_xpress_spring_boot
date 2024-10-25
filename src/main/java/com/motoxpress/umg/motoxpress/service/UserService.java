@@ -122,4 +122,19 @@ public class UserService implements ServiceCRUD<UserEntity> {
 
         return repository.save(user);
     }
+
+    public UserEntity updateUserRole(RolEntity rol, UserEntity find) {
+        UserEntity user = UserEntity.builder()
+                .idUsuario(find.getIdUsuario())
+                .username(find.getUsername())
+                .password(find.getPassword())
+                .fechaCreacion(find.getFechaCreacion())
+                .usuarioCreo(find.getUsuarioCreo())
+                .rol(rol)
+                .persona(find.getPersona())
+                .correo(find.getCorreo())
+                .build();
+
+        return repository.save(user);
+    }
 }

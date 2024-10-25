@@ -13,18 +13,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.motoxpress.umg.motoxpress.model.BaseResponse;
-import com.motoxpress.umg.motoxpress.model.auth.RegisterRequest;
 import com.motoxpress.umg.motoxpress.model.entity.PersonaEntity;
 import com.motoxpress.umg.motoxpress.model.entity.RolEntity;
 import com.motoxpress.umg.motoxpress.model.entity.UserEntity;
-import com.motoxpress.umg.motoxpress.service.PersonaService;
-import com.motoxpress.umg.motoxpress.service.RolService;
-import com.motoxpress.umg.motoxpress.service.UserService;
 
 @RestController
 @RequestMapping("/api/proyecto/user")
 @CrossOrigin
-public class UserController extends BaseController{
+public class UserController extends BaseController {
 
     @GetMapping("admin/usuarios/list")
     public ResponseEntity<BaseResponse> getDataList() {
@@ -65,8 +61,29 @@ public class UserController extends BaseController{
         }
     }
 
+    @PostMapping("admin/usuario/update/rol/{username}/{rol}")
+    public ResponseEntity<BaseResponse> updateChangeRol(@PathVariable String username, @PathVariable Long rol) {
+        try {
+            UserEntity find = service.getFindUncleEntity(username.toLowerCase());
+            RolEntity rolFind = serviceRol.getFindUncle(rol);
+            if (find != null && rolFind != null) {
+                service.updateUserRole(rolFind, find);
+
+                return ResponseEntity
+                        .ok(BaseResponse.builder().code("200").message("Se actualizo Correctamente").build());
+
+            }
+            return ResponseEntity.ok(
+                    BaseResponse.builder().code("400").message("Usuario no Existe o Rol no Valido").build());
+        } catch (Exception e) {
+            return ResponseEntity.ok(
+                    BaseResponse.builder().code("400").message("Surgio Algo Inesperado").build());
+        }
+    }
+
     @PostMapping("usuario/update/password/{username}/{password}/{passwordChange}")
-    public ResponseEntity<BaseResponse> updateUsuarioPassword(@PathVariable String username,@PathVariable String password,@PathVariable String passwordChange) {
+    public ResponseEntity<BaseResponse> updateUsuarioPassword(@PathVariable String username,
+            @PathVariable String password, @PathVariable String passwordChange) {
         try {
             UserEntity find = service.getFindUncleEntity(username.toLowerCase());
             if (find != null) {
