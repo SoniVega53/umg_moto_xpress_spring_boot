@@ -33,16 +33,17 @@ public class ModeloEntity {
     private String año;
 
 
+
     @Column(name = "fecha_creacion", nullable = false)
     private Date fechaCreacion;
 
-    @Column(name = "fecha_modificacion", nullable = false)
+    @Column(name = "fecha_modificacion")
     private Date fechaModificacion;
 
     @Column(name = "usuario_creo", nullable = false, length = 50)
     private String usuarioCreo;
 
-    @Column(name = "usuario_modifico", nullable = false, length = 50)
+    @Column(name = "usuario_modifico", length = 50)
     private String usuarioModifico;
     
 }
