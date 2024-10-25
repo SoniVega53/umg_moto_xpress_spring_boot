@@ -1,4 +1,5 @@
 package com.motoxpress.umg.motoxpress.model.entity;
+import java.sql.Date;
 
 import java.sql.Date;
 import java.util.Collection;

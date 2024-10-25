@@ -1,4 +1,5 @@
 package com.motoxpress.umg.motoxpress.model.entity;
+import java.sql.Date;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,12 +26,11 @@ public class PagoEstadoEntity {
 
     @Column(name = "descripcion", nullable = false, length = 50)
     private String descripcion;
-
     @Column(name = "fecha_creacion", nullable = false)
-    private String fecha_creacion;
+    private Date fecha_creacion;
 
     @Column(name = "fecha_modificacion", nullable = false)
-    private String fecha_modificacion;
+    private Date fecha_modificacion;
 
     @Column(name = "usuario_creo", nullable = false, length = 50)
     private String usuario_creo;
