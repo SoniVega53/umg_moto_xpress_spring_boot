@@ -6,19 +6,17 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+
 
 import com.motoxpress.umg.motoxpress.model.entity.ImagenEntity;
 import com.motoxpress.umg.motoxpress.model.repository.ImagenRepository;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
-import com.motoxpress.umg.motoxpress.model.repository.PagoRepository;
 
 public class ImagenService implements ServiceCRUD<ImagenEntity>{
 
     @Autowired
-    private PagoRepository repository;
+    private ImagenRepository repository;
 
     @Override
     public ImagenEntity createOrUpdate(ImagenEntity value) {

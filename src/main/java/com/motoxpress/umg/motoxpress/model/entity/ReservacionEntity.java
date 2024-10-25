@@ -26,22 +26,22 @@ public class ReservacionEntity {
     private Long id;
 
     @Column(name = "fecha_inicio", nullable = false)
-    private Date fecha_inicio;
+    private Date fechaInicio;
     @Column(name = "fecha_fin", nullable = false)
-    private Date fecha_fin;
+    private Date fechaFin;
     @Column(name = "fecha_reservacion", nullable = false)
-    private Date fecha_reservacion;
+    private Date fechaReservacion;
 
     @Column(name = "fecha_creacion", nullable = false)
-    private Date fecha_creacion;
+    private Date fechaCreacion;
 
     @Column(name = "fecha_modificacion", nullable = false)
-    private Date fecha_modificacion;
+    private Date fechaModificacion;
 
     @Column(name = "usuario_creo", nullable = false, length = 50)
-    private String usuario_creo;
+    private String usuarioCreo;
 
     @Column(name = "usuario_modifico", nullable = false, length = 50)
-    private String usuario_modifico;
+    private String usuarioModifico;
     
 }
