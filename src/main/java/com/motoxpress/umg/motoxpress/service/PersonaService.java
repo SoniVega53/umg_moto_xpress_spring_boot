@@ -17,6 +17,11 @@ public class PersonaService implements ServiceCRUD<PersonaEntity> {
 
     @Override
     public PersonaEntity createOrUpdate(PersonaEntity value) {
+        if (value.getIdPersona() != null) {
+            PersonaEntity personaEntity = getFindUncle(value.getIdPersona());
+            value.setFechaCreacion(personaEntity.getFechaCreacion());
+            value.setUsuarioCreo(personaEntity.getUsuarioCreo());
+        }
         return repository.save(value);
     }
 

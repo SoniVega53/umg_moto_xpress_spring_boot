@@ -34,6 +34,11 @@ public class UserService implements ServiceCRUD<UserEntity> {
     private AuthenticationManager authenticationManager;
 
     public UserEntity createOrUpdate(UserEntity value) {
+        if (value.getIdUsuario() != null) {
+            UserEntity personaEntity = getFindUncle(value.getIdUsuario());
+            value.setFechaCreacion(personaEntity.getFechaCreacion());
+            value.setUsuarioCreo(personaEntity.getUsuarioCreo());
+        }
         return repository.save(value);
     }
 
@@ -62,8 +67,8 @@ public class UserService implements ServiceCRUD<UserEntity> {
 
     public AuthResponse login(LoginRequest request) {
         authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
-                Optional<UserEntity> user = repository.findByUsername(request.getUsername());
+                .authenticate(new UsernamePasswordAuthenticationToken(request.getUsername().toLowerCase(), request.getPassword()));
+                Optional<UserEntity> user = repository.findByUsername(request.getUsername().toLowerCase());
         String token = jwtService.getToken(user.get());
         return AuthResponse.builder()
                 .token(token)
@@ -78,7 +83,7 @@ public class UserService implements ServiceCRUD<UserEntity> {
 
     public UserEntity register(RegisterRequest request,RolEntity rol,PersonaEntity personaEntity) {
         UserEntity user = UserEntity.builder()
-                .username(request.getUsername())
+                .username(request.getUsername().toLowerCase())
                 .correo(request.getEmail())
                 .persona(personaEntity)
                 .password(passwordEncoder.encode(request.getPassword()))
@@ -88,4 +93,33 @@ public class UserService implements ServiceCRUD<UserEntity> {
         return repository.save(user);
     }
 
+    public UserEntity changePassword(String passChange,UserEntity find) {
+        UserEntity user = UserEntity.builder()
+                .idUsuario(find.getIdUsuario())
+                .username(find.getUsername())
+                .fechaCreacion(find.getFechaCreacion())
+                .usuarioCreo(find.getUsuarioCreo())
+                .password(passwordEncoder.encode(passChange))
+                .persona(find.getPersona())
+                .rol(find.getRol())
+                .correo(find.getCorreo())
+                .build();
+
+        return repository.save(user);
+    }
+
+    public UserEntity updateUser(PersonaEntity request, UserEntity find) {
+        UserEntity user = UserEntity.builder()
+                .idUsuario(find.getIdUsuario())
+                .username(find.getUsername())
+                .password(find.getPassword())
+                .fechaCreacion(find.getFechaCreacion())
+                .usuarioCreo(find.getUsuarioCreo())
+                .rol(find.getRol())
+                .persona(request)
+                .correo(find.getCorreo())
+                .build();
+
+        return repository.save(user);
+    }
 }

@@ -41,7 +41,7 @@ public class AuthenticationController {
             RolEntity rol = serviceRol.getFindUncle(entity.getRolId());
             if (rol != null) {
                 entity.getUsername();
-                UserEntity userExist = service.getFindUncleEntity(entity.getUsername());
+                UserEntity userExist = service.getFindUncleEntity(entity.getUsername().toLowerCase());
 
                 if (userExist != null) {
                     return ResponseEntity.ok(BaseResponse.builder().code("400")
