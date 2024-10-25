@@ -24,15 +24,7 @@ import com.motoxpress.umg.motoxpress.service.UserService;
 @RestController
 @RequestMapping("/api/proyecto/user")
 @CrossOrigin
-public class UserController {
-    @Autowired
-    private UserService service;
-    @Autowired
-    private RolService serviceRol;
-    @Autowired
-    private PersonaService servicePersona;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+public class UserController extends BaseController{
 
     @GetMapping("admin/usuarios/list")
     public ResponseEntity<BaseResponse> getDataList() {

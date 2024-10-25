@@ -18,21 +18,11 @@ import com.motoxpress.umg.motoxpress.model.BaseResponse;
 import com.motoxpress.umg.motoxpress.model.entity.PersonaEntity;
 import com.motoxpress.umg.motoxpress.model.entity.RolEntity;
 import com.motoxpress.umg.motoxpress.model.entity.UserEntity;
-import com.motoxpress.umg.motoxpress.service.PersonaService;
-import com.motoxpress.umg.motoxpress.service.RolService;
-import com.motoxpress.umg.motoxpress.service.UserService;
 
 @RestController
 @RequestMapping("/api/proyecto/noauth")
 @CrossOrigin
-public class AuthenticationController {
-
-    @Autowired
-    private UserService service;
-    @Autowired
-    private RolService serviceRol;
-    @Autowired
-    private PersonaService servicePersona;
+public class AuthenticationController extends BaseController{
 
     @PostMapping("register")
     public ResponseEntity<BaseResponse> register(@RequestBody RegisterRequest entity) {
