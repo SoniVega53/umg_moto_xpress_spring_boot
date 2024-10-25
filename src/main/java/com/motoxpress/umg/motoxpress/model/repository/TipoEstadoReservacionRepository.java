@@ -11,6 +11,6 @@ import com.motoxpress.umg.motoxpress.model.entity.TipoEstadoReservacionEntity;
 
 
     public interface TipoEstadoReservacionRepository extends JpaRepository<TipoEstadoReservacionEntity,Long>{
-        Optional<TipoEstadoReservacionEntity> findyByDescripcion(String descripcion);
+        Optional<TipoEstadoReservacionEntity> findById(Long id);
     
     }

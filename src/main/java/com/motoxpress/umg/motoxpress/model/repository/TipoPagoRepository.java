@@ -12,6 +12,6 @@ import com.motoxpress.umg.motoxpress.model.entity.TipoPagoEntity;
 
 
     public interface TipoPagoRepository extends JpaRepository<TipoPagoEntity,Long>{
-        Optional<TipoPagoEntity> findyByDescripcion(String descripcion);
+        Optional<TipoPagoEntity> findById(Long id);
     
     }

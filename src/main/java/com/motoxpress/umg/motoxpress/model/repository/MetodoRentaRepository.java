@@ -10,6 +10,6 @@ import com.motoxpress.umg.motoxpress.model.entity.MetodoRentaEntity;
 
 
     public interface MetodoRentaRepository extends JpaRepository<MetodoRentaEntity,Long>{
-        Optional<MetodoRentaEntity> findyByDescripcion(String descripcion);
+        Optional<MetodoRentaEntity> findById(Long id);
     
     }

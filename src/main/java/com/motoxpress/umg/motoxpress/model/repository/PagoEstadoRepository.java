@@ -10,6 +10,6 @@ import com.motoxpress.umg.motoxpress.model.entity.PagoEstadoEntity;
     
     
     public interface PagoEstadoRepository extends JpaRepository<PagoEstadoEntity,Long>{
-        Optional<PagoEstadoEntity> findByDescripcion(String descripcion);
+        Optional<PagoEstadoEntity> findByDescripcion(Long id);
     
     }

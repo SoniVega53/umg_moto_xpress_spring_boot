@@ -12,6 +12,6 @@ import com.motoxpress.umg.motoxpress.model.entity.TipoEstadoMotocicletaEntity;
 
 
     public interface TipoEstadoMotocicletaRepository extends JpaRepository<TipoEstadoMotocicletaEntity,Long>{
-        Optional<TipoEstadoMotocicletaEntity> findyByDescripcion(String descripcion);
+        Optional<TipoEstadoMotocicletaEntity> findById(Long id);
     
     }
