@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,6 +25,14 @@ public class MotocicletaEntity {
     @Column(name = "id_motocicleta")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+     @ManyToOne
+    @JoinColumn(name = "id_marca", nullable = false)
+    private MarcaModeloEntity marca;
+
+    @ManyToOne
+    @JoinColumn(name = "id_estado_motocicleta", nullable = false)
+    private TipoEstadoMotocicletaEntity estado;
 
     @Column(name = "kilometraje", nullable = false)
     private Integer kilometraje;

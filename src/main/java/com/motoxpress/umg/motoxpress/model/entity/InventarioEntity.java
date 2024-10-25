@@ -6,6 +6,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,6 +26,14 @@ public class InventarioEntity {
     @Column(name = "id_inventario")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+     @ManyToOne
+    @JoinColumn(name = "id_motocicleta", nullable = false)
+    private MotocicletaEntity motocicleta;
+
+    @ManyToOne
+    @JoinColumn(name = "id_zona", nullable = false)
+    private ZonaGeograficaEntity zona;
 
     @Column(name = "fecha_disponibilidad", nullable = false)
     private Date fechaDisponibilidad;
