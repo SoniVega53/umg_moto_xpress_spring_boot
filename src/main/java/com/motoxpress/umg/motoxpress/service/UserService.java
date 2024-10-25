@@ -15,6 +15,8 @@ import com.motoxpress.umg.motoxpress.model.RoleUser;
 import com.motoxpress.umg.motoxpress.model.auth.AuthResponse;
 import com.motoxpress.umg.motoxpress.model.auth.LoginRequest;
 import com.motoxpress.umg.motoxpress.model.auth.RegisterRequest;
+import com.motoxpress.umg.motoxpress.model.entity.PersonaEntity;
+import com.motoxpress.umg.motoxpress.model.entity.RolEntity;
 import com.motoxpress.umg.motoxpress.model.entity.UserEntity;
 import com.motoxpress.umg.motoxpress.model.repository.UserRepository;
 
@@ -32,6 +34,11 @@ public class UserService implements ServiceCRUD<UserEntity> {
     private AuthenticationManager authenticationManager;
 
     public UserEntity createOrUpdate(UserEntity value) {
+        if (value.getIdUsuario() != null) {
+            UserEntity personaEntity = getFindUncle(value.getIdUsuario());
+            value.setFechaCreacion(personaEntity.getFechaCreacion());
+            value.setUsuarioCreo(personaEntity.getUsuarioCreo());
+        }
         return repository.save(value);
     }
 
@@ -42,6 +49,11 @@ public class UserService implements ServiceCRUD<UserEntity> {
     public UserEntity getFindUncle(Long value) {
         Optional<UserEntity> res = repository.findById(value);
         return res.isPresent() ? res.get() : null;
+    }
+
+    public UserEntity getFindUncleEntity(String value) {
+        Optional<UserEntity> user = repository.findByUsername(value);
+        return user.isPresent() ? user.get() : null;
     }
 
     public UserDetails getFindUncle(String value) {
@@ -55,9 +67,9 @@ public class UserService implements ServiceCRUD<UserEntity> {
 
     public AuthResponse login(LoginRequest request) {
         authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
-                UserEntity user = repository.findByUsername(request.getUsername()).orElseThrow();
-        String token = jwtService.getToken(user);
+                .authenticate(new UsernamePasswordAuthenticationToken(request.getUsername().toLowerCase(), request.getPassword()));
+                Optional<UserEntity> user = repository.findByUsername(request.getUsername().toLowerCase());
+        String token = jwtService.getToken(user.get());
         return AuthResponse.builder()
                 .token(token)
                 .build();
@@ -69,21 +81,58 @@ public class UserService implements ServiceCRUD<UserEntity> {
         return user;
     }
 
-    public UserEntity register(RegisterRequest request) {
+    public UserEntity register(RegisterRequest request,RolEntity rol,PersonaEntity personaEntity) {
         UserEntity user = UserEntity.builder()
-                .username(request.getUsername())
+                .username(request.getUsername().toLowerCase())
+                .correo(request.getEmail())
+                .persona(personaEntity)
                 .password(passwordEncoder.encode(request.getPassword()))
-                .rol(RoleUser.CLIENTE.name().toLowerCase())
+                .rol(rol)
                 .build();
 
         return repository.save(user);
     }
 
-    public UserEntity registerAdmin(RegisterRequest request) {
+    public UserEntity changePassword(String passChange,UserEntity find) {
         UserEntity user = UserEntity.builder()
-                .username(request.getUsername())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .rol(request.getRol())
+                .idUsuario(find.getIdUsuario())
+                .username(find.getUsername())
+                .fechaCreacion(find.getFechaCreacion())
+                .usuarioCreo(find.getUsuarioCreo())
+                .password(passwordEncoder.encode(passChange))
+                .persona(find.getPersona())
+                .rol(find.getRol())
+                .correo(find.getCorreo())
+                .build();
+
+        return repository.save(user);
+    }
+
+    public UserEntity updateUser(PersonaEntity request, UserEntity find) {
+        UserEntity user = UserEntity.builder()
+                .idUsuario(find.getIdUsuario())
+                .username(find.getUsername())
+                .password(find.getPassword())
+                .fechaCreacion(find.getFechaCreacion())
+                .usuarioCreo(find.getUsuarioCreo())
+                .rol(find.getRol())
+                .persona(request)
+                .correo(find.getCorreo())
+                .build();
+
+        return repository.save(user);
+    }
+
+    public UserEntity updateUserRole(RolEntity rol, UserEntity find) {
+        UserEntity user = UserEntity.builder()
+                .idUsuario(find.getIdUsuario())
+                .username(find.getUsername())
+                .password(find.getPassword())
+                .fechaCreacion(find.getFechaCreacion())
+                .usuarioCreo(find.getUsuarioCreo())
+                .rol(rol)
+                .persona(find.getPersona())
+                .correo(find.getCorreo())
                 .build();
 
         return repository.save(user);
