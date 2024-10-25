@@ -16,7 +16,6 @@ public class ZonaGeograficaController {
     @Autowired
     private ZonaGeograficaService service;
 
-    // Obtener todas las zonas geográficas
     @GetMapping
     public ResponseEntity<List<ZonaGeograficaEntity>> getAll() {
         List<ZonaGeograficaEntity> list = service.getDataList();
@@ -42,7 +41,7 @@ public class ZonaGeograficaController {
 
     @PutMapping("/{id}")
     public ResponseEntity<ZonaGeograficaEntity> update(@PathVariable Long id, @RequestBody ZonaGeograficaEntity value) {
-        value.setId(id); // Set the ID for the entity
+        value.setId(id); 
         ZonaGeograficaEntity updatedEntity = service.createOrUpdate(value);
         return ResponseEntity.ok(updatedEntity);
     }
