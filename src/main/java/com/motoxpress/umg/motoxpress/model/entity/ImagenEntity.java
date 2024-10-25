@@ -14,6 +14,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @Table(name = "IMAGEN")
 @Entity
 @Data
@@ -30,8 +31,6 @@ public class ImagenEntity {
      @ManyToOne
     @JoinColumn(name = "id_motocicleta", nullable = false)
     private MotocicletaEntity motocicleta;
-
-   
 
     @Column(name = "nombre", nullable = false, length = 50)
     private String nombre;

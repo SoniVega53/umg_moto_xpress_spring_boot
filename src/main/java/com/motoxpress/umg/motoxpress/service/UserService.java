@@ -18,7 +18,7 @@ import com.motoxpress.umg.motoxpress.model.auth.RegisterRequest;
 import com.motoxpress.umg.motoxpress.model.entity.UserEntity;
 import com.motoxpress.umg.motoxpress.model.repository.UserRepository;
 
-import lombok.RequiredArgsConstructor;
+
 
 @Service
 public class UserService implements ServiceCRUD<UserEntity> {
