@@ -22,8 +22,8 @@ public class ImagenService implements ServiceCRUD<ImagenEntity>{
 
     @Override
     public ImagenEntity createOrUpdate(ImagenEntity value) {
-        if (value.getIdImagen() != null) {
-            ImagenEntity personaEntity = getFindUncle(value.getIdImagen());
+        if (value.getId() != null) {
+            ImagenEntity personaEntity = getFindUncle(value.getId());
             value.setFechaCreacion(personaEntity.getFechaCreacion());
             value.setUsuarioCreo(personaEntity.getUsuarioCreo());
         }
